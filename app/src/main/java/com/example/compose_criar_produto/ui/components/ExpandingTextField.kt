@@ -41,7 +41,7 @@ fun ExpandingTextField(
         minLines = 1,
         maxLines = Int.MAX_VALUE,
         modifier = Modifier
-            .heightIn(50.dp)
+            .heightIn(49.dp)
             .width(348.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(containerColor) // Usa a cor passada
