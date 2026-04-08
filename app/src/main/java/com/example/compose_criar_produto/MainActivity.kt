@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.compose_criar_produto.ui.components.ButtonCustomized
 import com.example.compose_criar_produto.ui.theme.ComposecriarprodutoTheme
 
 class MainActivity : ComponentActivity() {
@@ -98,7 +99,7 @@ fun Tela(){
                 .height(800.dp)
                 .fillMaxWidth(1f)
                 .background(bgColor)
-        ){
+        ) {
             Box(
                 modifier = Modifier
                     .height(284.dp)
@@ -109,95 +110,40 @@ fun Tela(){
                     )
             )
             Spacer(Modifier.height(20.dp))
-            BasicTextField(
-                value = textName,
-                onValueChange = { textName = it },
-                textStyle = TextStyle(
-                    color = bgColor,
-                    fontSize = 18.sp
-                ),
-                singleLine = true,
-                modifier = Modifier
-                    .height(48.dp)
-                    .width(348.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(btColor)
-                    .padding(12.dp),
-                decorationBox = { innerTextField ->
-                    Box(
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        if (textName.isEmpty()) {
-                            Text(
-                                text = "Nome",
-                                fontSize = 18.sp,
-                                color = bgColor
-                            )
-                        }
-                        innerTextField()
-                    }
-                }
+            ExpandingTextField(
+                text = textName,
+                textColor = bgColor,
+                onTextChange = { textDesc2 = it },
+                placeholder = "Nome",
+                containerColor = btColor,
+                borderColor = btColor
             )
             Spacer(Modifier.height(20.dp))
-
+            ExpandingTextField(
+                text = textDesc1,
+                textColor = Color.Black,
+                onTextChange = { textDesc2 = it },
+                placeholder = "Descrição",
+                containerColor = bgColor,
+                borderColor = btColor
+            )
+            Spacer(Modifier.height(20.dp))
             ExpandingTextField(
                 text = textDesc2,
+                textColor = Color.Black,
                 onTextChange = { textDesc2 = it },
-                placeholder = "Descrição adicional (opcional)"
-            )
-
-            Spacer(Modifier.height(20.dp))
-            BasicTextField(
-                value = textDesc2,
-                onValueChange = { textDesc2 = it },
-                textStyle = TextStyle(
-                    color = Color.Black,
-                    fontSize = 18.sp
-                ),
-                minLines = 1,
-                maxLines = Int.MAX_VALUE,
-                modifier = Modifier
-                    .height(48.dp)
-                    .width(348.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(bgColor)
-                    .border(2.dp, btColor, RoundedCornerShape(8.dp))
-                    .padding(12.dp),
-                decorationBox = { innerTextField ->
-                    Box(
-                        contentAlignment = Alignment.CenterStart
-                    ) {
-                        if (textDesc2.isEmpty()) {
-                            Text(
-                                text = "Descrição adicional (opcional)",
-                                fontSize = 18.sp,
-                                color = Color.Black
-                            )
-                        }
-                        innerTextField()
-                    }
-                }
+                placeholder = "Descrição adicional (opicional)",
+                containerColor = bgColor,
+                borderColor = btColor
             )
             Spacer(Modifier.height(20.dp))
-            Button(
-                onClick = {
-            },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = btColor,
-                    contentColor = bgColor
-            ),
-                modifier = Modifier
-                    .height(49.dp)
-                    .width(198.dp)
-            )
-            {
-                Text(
-                    text = "Adicionar",
-                    fontSize = 18.sp
-                    )
-            }
+            ButtonCustomized(
+                text = "Adicionar",
+                textColor = bgColor,
+                containerColor = btColor,
+                borderColor = btColor
+                )
         }
-
 
     }
 }
