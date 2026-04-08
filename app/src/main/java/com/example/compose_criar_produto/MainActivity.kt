@@ -113,7 +113,7 @@ fun Tela(){
             ExpandingTextField(
                 text = textName,
                 textColor = bgColor,
-                onTextChange = { textDesc2 = it },
+                onTextChange = { textName = it },
                 placeholder = "Nome",
                 containerColor = btColor,
                 borderColor = btColor
@@ -122,7 +122,7 @@ fun Tela(){
             ExpandingTextField(
                 text = textDesc1,
                 textColor = Color.Black,
-                onTextChange = { textDesc2 = it },
+                onTextChange = { textDesc1 = it },
                 placeholder = "Descrição",
                 containerColor = bgColor,
                 borderColor = btColor
