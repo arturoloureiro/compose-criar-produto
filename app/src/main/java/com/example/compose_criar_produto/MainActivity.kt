@@ -17,9 +17,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
@@ -49,6 +51,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_criar_produto.ui.components.ButtonCustomized
+import com.example.compose_criar_produto.ui.components.FixedTextField
+import com.example.compose_criar_produto.ui.theme.BgDefault
 import com.example.compose_criar_produto.ui.theme.ComposecriarprodutoTheme
 
 class MainActivity : ComponentActivity() {
@@ -73,6 +77,7 @@ fun Tela(){
     var textName by remember { mutableStateOf("") }
     var textDesc1 by remember { mutableStateOf("") }
     var textDesc2 by remember { mutableStateOf("") }
+    val scrollState = rememberScrollState()
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -99,18 +104,34 @@ fun Tela(){
                 .height(800.dp)
                 .fillMaxWidth(1f)
                 .background(bgColor)
+                .verticalScroll(scrollState)
         ) {
-            Box(
-                modifier = Modifier
-                    .height(284.dp)
-                    .width(348.dp)
-                    .paint(
-                        painterResource(id = R.drawable.placeholder),
-                        contentScale = ContentScale.Crop
-                    )
-            )
+                Box(
+                    modifier = Modifier
+                        .height(284.dp)
+                        .width(348.dp)
+                        .paint(
+                            painterResource(id = R.drawable.placeholder),
+                            contentScale = ContentScale.Crop
+                        ),
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        ButtonCustomized(
+                            "escolher imagem",
+                            Color.Black,
+                            BgDefault,
+                            Color.Black
+                        )
+                    }
+                }
+
             Spacer(Modifier.height(20.dp))
-            ExpandingTextField(
+            FixedTextField(
                 text = textName,
                 textColor = bgColor,
                 onTextChange = { textName = it },
