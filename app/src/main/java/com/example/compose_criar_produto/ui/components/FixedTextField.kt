@@ -3,6 +3,8 @@ package com.example.compose_criar_produto.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -17,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +36,9 @@ fun FixedTextField(
     borderColor: Color
 ) {
     val placeholderTextColor = textColor.copy(alpha = 0.7f)
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val fixedTextFieldWidth = screenWidth * 0.83f
+    val fixedTextFieldHeight = fixedTextFieldWidth * (49f/348f)
     BasicTextField(
         value = text,
         onValueChange = onTextChange,
@@ -43,8 +49,8 @@ fun FixedTextField(
         singleLine = true,
         maxLines = 1,
         modifier = Modifier
-            .heightIn(49.dp)
-            .width(348.dp)
+            .width(fixedTextFieldWidth)
+            .heightIn(fixedTextFieldHeight)
             .clip(RoundedCornerShape(8.dp))
             .background(containerColor) // Usa a cor passada
             .border(2.dp, borderColor, RoundedCornerShape(8.dp))

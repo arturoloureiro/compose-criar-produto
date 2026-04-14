@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -12,11 +13,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -70,7 +73,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 @Preview
-fun Tela(){
+fun Tela() {
     val libreCaslonDisplay = FontFamily(Font(R.font.librecaslondisplay_regular))
     val bgColor = colorResource(id = R.color.bgColor)
     val btColor = colorResource(id = R.color.bt_default)
@@ -78,38 +81,48 @@ fun Tela(){
     var textDesc1 by remember { mutableStateOf("") }
     var textDesc2 by remember { mutableStateOf("") }
     val scrollState = rememberScrollState()
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .paint(
-                painterResource(id = R.drawable.background_image),
-                contentScale = ContentScale.Crop,
-                alpha = 0.25f
-            ).padding(2.dp, 70.dp)
-
+            .background(bgColor)
     ) {
-        Text(
-            "Adicionar Produto",
-            Modifier.width(200.dp),
-            fontFamily = libreCaslonDisplay,
-            fontSize = 50.sp,
-            lineHeight = 40.sp,
-            textAlign = TextAlign.Center
+        Image(
+            painter = painterResource(id = R.drawable.background_image),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize()
+                .alpha(0.25f)
         )
-        Spacer(Modifier.height(50.dp))
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .height(800.dp)
-                .fillMaxWidth(1f)
-                .background(bgColor)
+                .fillMaxSize()
+                .padding(2.dp, 70.dp)
                 .verticalScroll(scrollState)
+
         ) {
+            Text(
+                "Adicionar Produto",
+                Modifier.width(200.dp),
+                fontFamily = libreCaslonDisplay,
+                fontSize = 50.sp,
+                lineHeight = 40.sp,
+                textAlign = TextAlign.Center
+            )
+            Spacer(Modifier.height(50.dp))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .fillMaxWidth(1f)
+                    .wrapContentHeight()
+                    .background(bgColor)
+
+            ) {
                 Box(
                     modifier = Modifier
-                        .height(284.dp)
-                        .width(348.dp)
+                        .fillMaxWidth(0.83f)
+                        .aspectRatio(348f / 284f)
                         .paint(
                             painterResource(id = R.drawable.placeholder),
                             contentScale = ContentScale.Crop
@@ -130,42 +143,43 @@ fun Tela(){
                     }
                 }
 
-            Spacer(Modifier.height(20.dp))
-            FixedTextField(
-                text = textName,
-                textColor = bgColor,
-                onTextChange = { textName = it },
-                placeholder = "Nome",
-                containerColor = btColor,
-                borderColor = btColor
-            )
-            Spacer(Modifier.height(20.dp))
-            ExpandingTextField(
-                text = textDesc1,
-                textColor = Color.Black,
-                onTextChange = { textDesc1 = it },
-                placeholder = "Descrição",
-                containerColor = bgColor,
-                borderColor = btColor
-            )
-            Spacer(Modifier.height(20.dp))
-            ExpandingTextField(
-                text = textDesc2,
-                textColor = Color.Black,
-                onTextChange = { textDesc2 = it },
-                placeholder = "Descrição adicional (opicional)",
-                containerColor = bgColor,
-                borderColor = btColor
-            )
-            Spacer(Modifier.height(20.dp))
-            ButtonCustomized(
-                text = "Adicionar",
-                textColor = bgColor,
-                containerColor = btColor,
-                borderColor = btColor
+                Spacer(Modifier.height(20.dp))
+                FixedTextField(
+                    text = textName,
+                    textColor = bgColor,
+                    onTextChange = { textName = it },
+                    placeholder = "Nome",
+                    containerColor = btColor,
+                    borderColor = btColor
                 )
-        }
+                Spacer(Modifier.height(20.dp))
+                ExpandingTextField(
+                    text = textDesc1,
+                    textColor = Color.Black,
+                    onTextChange = { textDesc1 = it },
+                    placeholder = "Descrição",
+                    containerColor = bgColor,
+                    borderColor = btColor
+                )
+                Spacer(Modifier.height(20.dp))
+                ExpandingTextField(
+                    text = textDesc2,
+                    textColor = Color.Black,
+                    onTextChange = { textDesc2 = it },
+                    placeholder = "Descrição adicional (opicional)",
+                    containerColor = bgColor,
+                    borderColor = btColor
+                )
+                Spacer(Modifier.height(20.dp))
+                ButtonCustomized(
+                    text = "Adicionar",
+                    textColor = bgColor,
+                    containerColor = btColor,
+                    borderColor = btColor
+                )
+            }
 
+        }
     }
 }
 
