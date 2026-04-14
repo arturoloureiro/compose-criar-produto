@@ -52,7 +52,7 @@ fun FixedTextField(
             .width(fixedTextFieldWidth)
             .heightIn(fixedTextFieldHeight)
             .clip(RoundedCornerShape(8.dp))
-            .background(containerColor) // Usa a cor passada
+            .background(containerColor)
             .border(2.dp, borderColor, RoundedCornerShape(8.dp))
             .padding(12.dp),
         decorationBox = { innerTextField ->
