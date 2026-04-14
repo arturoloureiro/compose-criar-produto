@@ -139,7 +139,7 @@ fun Tela() {
                             Color.Black,
                             BgDefault,
                             Color.Black
-                        )
+                        ) {} // Como o parâmetro do onClick
                     }
                 }
 
@@ -176,7 +176,7 @@ fun Tela() {
                     textColor = bgColor,
                     containerColor = btColor,
                     borderColor = btColor
-                )
+                ) {}
             }
 
         }

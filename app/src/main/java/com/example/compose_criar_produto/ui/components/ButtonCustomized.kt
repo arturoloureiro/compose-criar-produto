@@ -1,10 +1,12 @@
 package com.example.compose_criar_produto.ui.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,19 +26,18 @@ fun ButtonCustomized(
     textColor: Color,
     containerColor: Color,
     borderColor: Color,
+    onClick: () -> Unit
 ){
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val buttonWidth = screenWidth * 0.472f
-    val buttonHeight = buttonWidth * (49f/348f)
+    val buttonHeight = buttonWidth * (90f/348f)
     Button(
-        onClick = { onClick(
-
-        ) },
+        onClick = onClick,
         modifier = Modifier
             .width(buttonWidth)
-            .heightIn(min = buttonHeight)
-            .border(2.dp, borderColor, RoundedCornerShape(50)),
-        shape = RoundedCornerShape(50),
+            .heightIn(min = buttonHeight),
+        shape = CircleShape,
+        border = BorderStroke(1.5.dp, borderColor),
         enabled = true,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
