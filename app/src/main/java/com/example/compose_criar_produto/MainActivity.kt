@@ -35,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -49,6 +50,7 @@ import com.example.compose_criar_produto.ui.components.ButtonMoreCustomizable
 import com.example.compose_criar_produto.ui.components.Categorias
 import com.example.compose_criar_produto.ui.theme.ComposecriarprodutoTheme
 import com.example.compose_criar_produto.ui.components.CalculadoraCategoria
+import com.example.compose_criar_produto.ui.components.FixedTextField
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +74,7 @@ fun Tela() {
     var textName by remember { mutableStateOf("") }
     var textDesc1 by remember { mutableStateOf("") }
     var textDesc2 by remember { mutableStateOf("") }
+    var textPesquisarMu by remember { mutableStateOf("")}
     val scrollState = rememberScrollState()
     Box(
         modifier = Modifier
@@ -115,13 +118,18 @@ fun Tela() {
             ) {
                 Column {
                     Spacer(modifier = Modifier.height(10.dp))
+                    Row(){
+                        Text(
+                        text = "Município"
+                    )
+
+                    }
                     Categorias(
                         categorias = listOf("Têxteis", "Cerâmica", "Entalhe"),
                     ) { categoria ->
                         val larguraDinamica by remember(categoria) {
                             mutableStateOf(CalculadoraCategoria.calcularLargura(categoria))
                         }
-
                         ButtonMoreCustomizable(
                             text = categoria,
                             textColor = btColor,
