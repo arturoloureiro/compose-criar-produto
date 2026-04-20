@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -51,6 +52,11 @@ import com.example.compose_criar_produto.ui.components.Categorias
 import com.example.compose_criar_produto.ui.theme.ComposecriarprodutoTheme
 import com.example.compose_criar_produto.ui.components.CalculadoraCategoria
 import com.example.compose_criar_produto.ui.components.FixedTextField
+import com.example.compose_criar_produto.ui.components.Ordem
+import com.example.compose_criar_produto.ui.components.OrderBy
+import com.example.compose_criar_produto.ui.components.ProdutoNavegar
+import com.example.compose_criar_produto.ui.components.SearchBar
+import com.example.compose_criar_produto.ui.theme.BgDefault
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +81,6 @@ fun Tela() {
     var textDesc1 by remember { mutableStateOf("") }
     var textDesc2 by remember { mutableStateOf("") }
     var textPesquisarMu by remember { mutableStateOf("")}
-    val scrollState = rememberScrollState()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -94,7 +99,7 @@ fun Tela() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(2.dp, 70.dp)
-                .verticalScroll(scrollState)
+
 
         ) {
             var mostrarCategorias by remember { mutableStateOf(false) }
@@ -116,14 +121,46 @@ fun Tela() {
                     animationSpec = tween(durationMillis = 300)
                 ) + fadeOut(animationSpec = tween(durationMillis = 300))
             ) {
-                Column {
+                Column (modifier = Modifier.background(bgColor)) {
                     Spacer(modifier = Modifier.height(10.dp))
-                    Row(){
+                    Row(verticalAlignment = Alignment.CenterVertically){
                         Text(
-                        text = "Município"
-                    )
+                            text = "Ordenar por",
+                            fontSize = 20.sp,
+                            modifier = Modifier
+                                .padding(start = 8.dp, end = 8.dp)
+                        )
+                        Spacer(modifier = Modifier.height(20.dp).width(3.dp).background(btColor))
+                        OrderBy()
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Row(verticalAlignment = Alignment.CenterVertically){
+                        Text(
+                            text = "Município",
+                            fontSize = 20.sp,
+                            modifier = Modifier
+                                .padding(start = 8.dp, end = 8.dp)
+                                .background(bgColor)
+                        )
+                        Spacer(modifier = Modifier.height(20.dp).width(3.dp).background(btColor))
+                        SearchBar(
+                            modifier = Modifier.weight(1f),
+                            text = textPesquisarMu,
+                            textColor = Color.Black,
+                            onTextChange = { textPesquisarMu = it },
+                            containerColor = BgDefault,
+                            placeholder = "Pesquise um município"
+                        )
 
                     }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    Text(
+                        text = "Categorias",
+                        fontSize = 20.sp,
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                    )
+                    Spacer(modifier = Modifier.height(10.dp))
                     Categorias(
                         categorias = listOf("Têxteis", "Cerâmica", "Entalhe"),
                     ) { categoria ->
@@ -160,7 +197,18 @@ fun Tela() {
                     textAlign = TextAlign.Center
                 )
             }
-
+            Spacer(modifier = Modifier.height(30.dp))
+            LazyColumn {
+                item {
+                    ProdutoNavegar(
+                        Imagem = painterResource(id = R.drawable.placeholder),
+                        Titulo = "Capixabidade",
+                        BreveDesc = "Trata-se do que é capixaba",
+                        Avaliacao = 99999999999.0,
+                        Preco = 99999999999.0
+                    )
+                }
+            }
 
         }
     }
