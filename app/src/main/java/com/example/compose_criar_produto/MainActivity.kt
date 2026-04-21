@@ -20,12 +20,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.runtime.Composable
@@ -45,18 +43,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.compose_criar_produto.ui.components.ButtonCustomized
-import com.example.compose_criar_produto.ui.components.ButtonFilter
-import com.example.compose_criar_produto.ui.components.ButtonMoreCustomizable
+import com.example.compose_criar_produto.ui.components.AppButton
 import com.example.compose_criar_produto.ui.components.Categorias
 import com.example.compose_criar_produto.ui.theme.ComposecriarprodutoTheme
 import com.example.compose_criar_produto.ui.components.CalculadoraCategoria
-import com.example.compose_criar_produto.ui.components.FixedTextField
-import com.example.compose_criar_produto.ui.components.Ordem
 import com.example.compose_criar_produto.ui.components.OrderBy
 import com.example.compose_criar_produto.ui.components.ProdutoNavegar
 import com.example.compose_criar_produto.ui.components.SearchBar
-import com.example.compose_criar_produto.ui.theme.BgDefault
+import com.example.compose_criar_produto.ui.theme.bgDefault
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,10 +71,9 @@ fun Tela() {
     val libreCaslonDisplay = FontFamily(Font(R.font.librecaslondisplay_regular))
     val bgColor = colorResource(id = R.color.bgColor)
     val btColor = colorResource(id = R.color.bt_default)
-    var textName by remember { mutableStateOf("") }
-    var textDesc1 by remember { mutableStateOf("") }
-    var textDesc2 by remember { mutableStateOf("") }
-    var textPesquisarMu by remember { mutableStateOf("")}
+    var textPesquisarMu by remember { mutableStateOf("") }
+    var mostrarCategorias by remember{ mutableStateOf(false) }
+    var statusCategoriasAbertas by remember{ mutableStateOf(false) }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -102,16 +95,27 @@ fun Tela() {
 
 
         ) {
-            var mostrarCategorias by remember { mutableStateOf(false) }
             Row(modifier = Modifier.fillMaxWidth() .height(40.dp)) {
-                ButtonFilter(
+                AppButton(
+                    modifier = Modifier
+                        .width(150.dp)
+                        .height(40.dp),
                     text = "Filtros",
+                    textColor = bgDefault,
+                    containerColor = btColor,
+                    borderColor = btColor,
+                    shape = RoundedCornerShape(
+                        topStart = 0.dp,
+                        topEnd = 0.dp,
+                        bottomEnd = 30.dp,
+                        bottomStart = 0.dp
+                    ),
                     onClick = { mostrarCategorias = !mostrarCategorias }
                 )
             }
 
             AnimatedVisibility(
-                visible = ButtonFilter.statusCategoriasAbertas,
+                visible = statusCategoriasAbertas,
                 enter = expandVertically(
                     expandFrom = Alignment.Top,
                     animationSpec = tween(durationMillis = 300)
@@ -121,7 +125,7 @@ fun Tela() {
                     animationSpec = tween(durationMillis = 300)
                 ) + fadeOut(animationSpec = tween(durationMillis = 300))
             ) {
-                Column (modifier = Modifier.background(bgColor)) {
+                Column(modifier = Modifier.background(bgColor)) {
                     Spacer(modifier = Modifier.height(10.dp))
                     Row(verticalAlignment = Alignment.CenterVertically){
                         Text(
@@ -134,7 +138,7 @@ fun Tela() {
                         OrderBy()
                     }
                     Spacer(modifier = Modifier.height(10.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically){
+                    Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
                             text = "Município",
                             fontSize = 20.sp,
@@ -148,7 +152,7 @@ fun Tela() {
                             text = textPesquisarMu,
                             textColor = Color.Black,
                             onTextChange = { textPesquisarMu = it },
-                            containerColor = BgDefault,
+                            containerColor = bgDefault,
                             placeholder = "Pesquise um município"
                         )
 
@@ -167,14 +171,15 @@ fun Tela() {
                         val larguraDinamica by remember(categoria) {
                             mutableStateOf(CalculadoraCategoria.calcularLargura(categoria))
                         }
-                        ButtonMoreCustomizable(
+                        AppButton(
                             text = categoria,
                             textColor = btColor,
                             containerColor = bgColor,
                             borderColor = btColor,
-                            widthButton = larguraDinamica,
-                            heightButton = 40.0,
-                            modifier = Modifier,
+                            shape = RoundedCornerShape(50),
+                            modifier = Modifier
+                                .width(larguraDinamica.dp)
+                                .height(40.dp),
                             onClick = { println("Clicou em $categoria") }
                         )
                     }
@@ -201,11 +206,11 @@ fun Tela() {
             LazyColumn {
                 item {
                     ProdutoNavegar(
-                        Imagem = painterResource(id = R.drawable.placeholder),
-                        Titulo = "Capixabidade",
-                        BreveDesc = "Trata-se do que é capixaba",
-                        Avaliacao = 99999999999.0,
-                        Preco = 99999999999.0
+                        imagem = painterResource(id = R.drawable.placeholder),
+                        titulo = "Capixabidade",
+                        breveDesc = "Trata-se do que é capixaba",
+                        avaliacao = 99999999999.0,
+                        preco = 99999999999.0
                     )
                 }
             }
@@ -213,4 +218,3 @@ fun Tela() {
         }
     }
 }
-

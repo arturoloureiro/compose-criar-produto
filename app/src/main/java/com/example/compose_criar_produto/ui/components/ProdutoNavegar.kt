@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 
-val InterFont = FontFamily(
+val interFont = FontFamily(
     Font(R.font.inter_variablefont_opszwght, FontWeight.Normal),
     Font(R.font.inter_variablefont_opszwght, FontWeight.Medium),
     Font(R.font.inter_variablefont_opszwght, FontWeight.Bold)
@@ -23,15 +23,15 @@ val InterFont = FontFamily(
 
 @Composable
 fun ProdutoNavegar (
-    Imagem: Painter,
-    Titulo: String,
-    BreveDesc: String,
-    Avaliacao: Double,
-    Preco: Double
+    imagem: Painter,
+    titulo: String,
+    breveDesc: String,
+    avaliacao: Double,
+    preco: Double
 ) {
     Row() {
         Image(
-            painter = Imagem,
+            painter = imagem,
             contentDescription = null,
             contentScale = ContentScale.Fit,
             modifier = Modifier
@@ -39,18 +39,18 @@ fun ProdutoNavegar (
         )
         Column() {
             Text(
-                text = Titulo,
-                fontFamily = InterFont,
+                text = titulo,
+                fontFamily = interFont,
                 fontWeight = FontWeight.Medium
             )
             Text(
-                text = BreveDesc
+                text = breveDesc
             )
             Text(
-                text = "$Avaliacao"
+                text = "$avaliacao"
             )
             Text(
-                text = "$Preco"
+                text = "$preco"
             )
         }
     }
