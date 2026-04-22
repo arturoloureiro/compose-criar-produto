@@ -12,6 +12,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.snapping.SnapPosition.Center
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -115,107 +116,131 @@ fun Tela() {
                 )
             }
 
-            AnimatedVisibility(
-                visible = mostrarCategorias,
-                enter = expandVertically(
-                    expandFrom = Alignment.Top,
-                    animationSpec = tween(durationMillis = 300)
-                ) + fadeIn(animationSpec = tween(durationMillis = 300)),
-                exit = shrinkVertically(
-                    shrinkTowards = Alignment.Top,
-                    animationSpec = tween(durationMillis = 300)
-                ) + fadeOut(animationSpec = tween(durationMillis = 300))
-            ) {
-                Column(modifier = Modifier.background(bgColor)) {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically){
+            Box(modifier = Modifier.fillMaxWidth()) {
+
+                Column(modifier = Modifier.fillMaxSize()) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxWidth(1f)
+                            .height(50.dp)
+                            .background(bgColor)
+
+                    ) {
                         Text(
-                            text = "Ordenar por",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .width(130.dp)
-                                .padding(start = 8.dp, end = 8.dp)
+                            "Descubra",
+                            Modifier.width(200.dp),
+                            fontFamily = libreCaslonDisplay,
+                            fontSize = 40.sp,
+                            textAlign = TextAlign.Center
                         )
-                        Spacer(modifier = Modifier.height(20.dp).width(3.dp).background(btColor))
-                        Box(modifier = Modifier.weight(1f)){
-                            OrderBy(Color.Black)
+                    }
+                    LazyColumn {
+                        for (i in 1..10){
+                            item {
+                                ProdutoNavegar(
+                                    imagem = painterResource(id = R.drawable.placeholder),
+                                    titulo = "Capixabidade",
+                                    breveDesc = "Trata-se do que é capixaba",
+                                    avaliacao = 99999999999.0,
+                                    preco = 99999999999.0
+                                )
+                            }
                         }
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                }
+
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = mostrarCategorias,
+                    enter =  fadeIn(animationSpec = tween(300)),
+                    exit = fadeOut(animationSpec = tween(300))
+                ){
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(Color.Black.copy(alpha = 0.5f))
+                            .clickable { mostrarCategorias = false }
+                    )
+                }
+
+                androidx.compose.animation.AnimatedVisibility(
+                    visible = mostrarCategorias,
+                    enter = expandVertically(
+                        expandFrom = Alignment.Top,
+                        animationSpec = tween(durationMillis = 300)
+                    ) + fadeIn(animationSpec = tween(durationMillis = 300)),
+                    exit = shrinkVertically(
+                        shrinkTowards = Alignment.Top,
+                        animationSpec = tween(durationMillis = 300)
+                    ) + fadeOut(animationSpec = tween(durationMillis = 300)),
+                    modifier = Modifier.align(Alignment.TopCenter)
+                ) {
+                    Column(modifier = Modifier.background(bgColor).padding(bottom = 16.dp)) {
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = "Ordenar por",
+                                fontSize = 20.sp,
+                                modifier = Modifier
+                                    .width(130.dp)
+                                    .padding(start = 8.dp, end = 8.dp)
+                            )
+                            Spacer(
+                                modifier = Modifier.height(20.dp).width(3.dp).background(btColor)
+                            )
+                            Box(modifier = Modifier.weight(1f)) {
+                                OrderBy(Color.Black)
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = "Município",
+                                fontSize = 20.sp,
+                                modifier = Modifier
+                                    .width(130.dp)
+                                    .padding(start = 8.dp, end = 8.dp)
+                                    .background(bgColor)
+                            )
+                            Spacer(
+                                modifier = Modifier.height(20.dp).width(3.dp).background(btColor)
+                            )
+                            SearchBar(
+                                modifier = Modifier.weight(1f),
+                                text = textPesquisarMu,
+                                textColor = Color.Black,
+                                onTextChange = { textPesquisarMu = it },
+                                containerColor = bgDefault,
+                                placeholder = "Pesquise um município"
+                            )
+
+                        }
+                        Spacer(modifier = Modifier.height(10.dp))
                         Text(
-                            text = "Município",
+                            text = "Categorias:",
                             fontSize = 20.sp,
                             modifier = Modifier
-                                .width(130.dp)
-                                .padding(start = 8.dp, end = 8.dp)
-                                .background(bgColor)
+                                .padding(start = 8.dp)
                         )
-                        Spacer(modifier = Modifier.height(20.dp).width(3.dp).background(btColor))
-                        SearchBar(
-                            modifier = Modifier.weight(1f),
-                            text = textPesquisarMu,
-                            textColor = Color.Black,
-                            onTextChange = { textPesquisarMu = it },
-                            containerColor = bgDefault,
-                            placeholder = "Pesquise um município"
-                        )
-
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = "Categorias:",
-                        fontSize = 20.sp,
-                        modifier = Modifier
-                            .padding(start = 8.dp)
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Categorias(
-                        categorias = listOf("Têxteis", "Cerâmica", "Entalhe"),
-                    ) { categoria ->
-                        AppButton(
-                            text = categoria,
-                            textColor = btColor,
-                            containerColor = bgColor,
-                            borderColor = btColor,
-                            shape = RoundedCornerShape(50),
-                            modifier = Modifier
-                                .wrapContentWidth()
-                                .height(40.dp),
-                            onClick = { println("Clicou em $categoria") }
-                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        Categorias(
+                            categorias = listOf("Têxteis", "Cerâmica", "Entalhe"),
+                        ) { categoria ->
+                            AppButton(
+                                text = categoria,
+                                textColor = btColor,
+                                containerColor = bgColor,
+                                borderColor = btColor,
+                                shape = RoundedCornerShape(50),
+                                modifier = Modifier
+                                    .wrapContentWidth()
+                                    .height(40.dp),
+                                onClick = { println("Clicou em $categoria") }
+                            )
+                        }
                     }
                 }
             }
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .fillMaxWidth(1f)
-                    .height(50.dp)
-                    .background(bgColor)
-
-            ) {
-                Text(
-                    "Descubra",
-                    Modifier.width(200.dp),
-                    fontFamily = libreCaslonDisplay,
-                    fontSize = 40.sp,
-                    textAlign = TextAlign.Center
-                )
-            }
-            LazyColumn {
-                item {
-                    ProdutoNavegar(
-                        imagem = painterResource(id = R.drawable.placeholder),
-                        titulo = "Capixabidade",
-                        breveDesc = "Trata-se do que é capixaba",
-                        avaliacao = 99999999999.0,
-                        preco = 99999999999.0
-                    )
-                }
-            }
-
         }
     }
 }
