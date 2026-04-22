@@ -2,6 +2,8 @@ package com.example.compose_criar_produto.ui.components
 
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -10,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -21,21 +25,24 @@ fun AppButton(
     textColor: Color = Color.White,
     containerColor: Color = Color.Gray,
     borderColor: Color = Color.Transparent,
-    shape: Shape = CircleShape
+    shape: Shape = CircleShape,
+    fontSize: TextUnit = 18.sp,
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier,
+        modifier = modifier
+            .defaultMinSize(minWidth = 1.dp, minHeight = 1.dp),
         shape = shape,
         border = BorderStroke(1.5.dp, borderColor),
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = textColor,
-        )
+        ),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 0.dp),
     ) {
         Text(
             text = text,
-            fontSize = 18.sp,
+            fontSize = fontSize,
             color = textColor
         )
     }

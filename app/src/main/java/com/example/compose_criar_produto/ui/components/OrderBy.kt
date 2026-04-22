@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_criar_produto.ui.theme.bgDefault
@@ -27,7 +28,8 @@ object Ordem {
 }
 
 @Composable
-fun OrderBy () {
+fun OrderBy (textColor: Color) {
+    val placeholderTextColor = textColor.copy(alpha = 0.7f)
     var expanded by remember { mutableStateOf(false) }
     Box (
         modifier = Modifier
@@ -35,7 +37,8 @@ fun OrderBy () {
             .padding(start = 8.dp)
     ) {
         Text(Ordem.ordem,
-            fontSize = 20.sp,
+            fontSize = 18.sp,
+            color = placeholderTextColor,
             modifier = Modifier.clickable { expanded = true })
         DropdownMenu(
             expanded = expanded,
@@ -46,12 +49,12 @@ fun OrderBy () {
                 .width(150.dp)
         ) {
             DropdownMenuItem(
-                text = { Text("Nome", fontSize = 20.sp) },
+                text = { Text("Nome", fontSize = 18.sp) },
                 onClick = { expanded = false; Ordem.ordem = "Nome"},
             )
             Spacer(modifier = Modifier.fillMaxWidth(0.9f).height(3.dp).background(btColor))
             DropdownMenuItem(
-                text = { Text("Preço", fontSize = 20.sp) },
+                text = { Text("Preço", fontSize = 18.sp) },
                 onClick = { expanded = false; Ordem.ordem = "Preço" }
             )
         }

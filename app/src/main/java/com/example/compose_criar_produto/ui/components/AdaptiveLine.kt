@@ -10,7 +10,7 @@ import kotlin.math.max
 @Composable
 fun AdaptiveLine (
     modifier: Modifier = Modifier,
-    horizontalSpacing: Dp = 8.dp,
+    horizontalSpacing: Dp = 0.dp,
     verticalSpacing: Dp = 8.dp,
     content: @Composable () -> Unit
 ) {
