@@ -19,12 +19,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,8 +40,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
@@ -49,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.compose_criar_produto.ui.components.AppButton
 import com.example.compose_criar_produto.ui.components.Categorias
+import com.example.compose_criar_produto.ui.components.ImageCarousel
 import com.example.compose_criar_produto.ui.theme.ComposecriarprodutoTheme
 import com.example.compose_criar_produto.ui.components.OrderBy
 import com.example.compose_criar_produto.ui.components.ProdutoNavegar
@@ -73,9 +78,11 @@ class MainActivity : ComponentActivity() {
 fun Tela() {
     val libreCaslonDisplay = FontFamily(Font(R.font.librecaslondisplay_regular))
     val bgColor = colorResource(id = R.color.bgColor)
+    val cardColor = Color(0xFFFDF5E6)
     val btColor = colorResource(id = R.color.bt_default)
     var textPesquisarMu by remember { mutableStateOf("") }
-    var mostrarCategorias by remember{ mutableStateOf(false) }
+    var mostrarCategorias by remember { mutableStateOf(false) }
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -89,158 +96,50 @@ fun Tela() {
                 .fillMaxSize()
                 .alpha(0.25f)
         )
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Box(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(2.dp, 70.dp)
+                .fillMaxHeight()
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(20))
+                .padding(top = 20.dp)
+                .background(bgColor)
+                .padding(top = 20.dp),
+            contentAlignment = Alignment.Center
+        ){
 
+        Box(
+            modifier = Modifier
+                .height(screenWidth * 0.4f)
+                .width(screenWidth * 0.4f)
+                .clip(RoundedCornerShape(50)) // tem que vir antes do background
+                .background(btColor),
+        )
+            Spacer(modifier = Modifier.height(screenWidth * 0.35f))
 
-        ) {
-            Row(modifier = Modifier.fillMaxWidth() .height(40.dp)) {
-                AppButton(
-                    modifier = Modifier
-                        .width(150.dp)
-                        .height(40.dp),
-                    text = "Filtros",
-                    textColor = bgDefault,
-                    containerColor = btColor,
-                    borderColor = btColor,
-                    shape = RoundedCornerShape(
-                        topStart = 0.dp,
-                        topEnd = 0.dp,
-                        bottomEnd = 30.dp,
-                        bottomStart = 0.dp
-                    ),
-                    onClick = { mostrarCategorias = !mostrarCategorias }
-                )
-            }
-
-            Box(modifier = Modifier.fillMaxWidth()) {
-
-                Column(modifier = Modifier.fillMaxSize()) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .fillMaxWidth(1f)
-                            .height(50.dp)
-                            .background(bgColor)
-
-                    ) {
-                        Text(
-                            "Descubra",
-                            Modifier.width(200.dp),
-                            fontFamily = libreCaslonDisplay,
-                            fontSize = 40.sp,
-                            textAlign = TextAlign.Center
-                        )
-                    }
-                    LazyColumn {
-                        for (i in 1..10){
-                            item {
-                                ProdutoNavegar(
-                                    imagem = painterResource(id = R.drawable.placeholder),
-                                    titulo = "Capixabidade",
-                                    breveDesc = "Trata-se do que é capixaba",
-                                    avaliacao = 99999999999.0,
-                                    preco = 99999999999.0
-                                )
-                            }
-                        }
-                    }
-                }
-
-                androidx.compose.animation.AnimatedVisibility(
-                    visible = mostrarCategorias,
-                    enter =  fadeIn(animationSpec = tween(300)),
-                    exit = fadeOut(animationSpec = tween(300))
-                ){
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Color.Black.copy(alpha = 0.5f))
-                            .clickable { mostrarCategorias = false }
+                Row(
+                    modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(top = 20.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        "Paneleiras Capixabas",
+                        fontSize = 40.sp,
+                        fontFamily = libreCaslonDisplay
                     )
                 }
-
-                androidx.compose.animation.AnimatedVisibility(
-                    visible = mostrarCategorias,
-                    enter = expandVertically(
-                        expandFrom = Alignment.Top,
-                        animationSpec = tween(durationMillis = 300)
-                    ) + fadeIn(animationSpec = tween(durationMillis = 300)),
-                    exit = shrinkVertically(
-                        shrinkTowards = Alignment.Top,
-                        animationSpec = tween(durationMillis = 300)
-                    ) + fadeOut(animationSpec = tween(durationMillis = 300)),
-                    modifier = Modifier.align(Alignment.TopCenter)
+                Row(
+                    modifier = Modifier.wrapContentHeight().fillMaxWidth()
+                        .padding(top = 10.dp, start = 8.dp, bottom = 10.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Column(modifier = Modifier.background(bgColor).padding(bottom = 16.dp)) {
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = "Ordenar por",
-                                fontSize = 20.sp,
-                                modifier = Modifier
-                                    .width(130.dp)
-                                    .padding(start = 8.dp, end = 8.dp)
-                            )
-                            Spacer(
-                                modifier = Modifier.height(20.dp).width(3.dp).background(btColor)
-                            )
-                            Box(modifier = Modifier.weight(1f)) {
-                                OrderBy(Color.Black)
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(
-                                text = "Município",
-                                fontSize = 20.sp,
-                                modifier = Modifier
-                                    .width(130.dp)
-                                    .padding(start = 8.dp, end = 8.dp)
-                                    .background(bgColor)
-                            )
-                            Spacer(
-                                modifier = Modifier.height(20.dp).width(3.dp).background(btColor)
-                            )
-                            SearchBar(
-                                modifier = Modifier.weight(1f),
-                                text = textPesquisarMu,
-                                textColor = Color.Black,
-                                onTextChange = { textPesquisarMu = it },
-                                containerColor = bgDefault,
-                                placeholder = "Pesquise um município"
-                            )
-
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-                        Text(
-                            text = "Categorias:",
-                            fontSize = 20.sp,
-                            modifier = Modifier
-                                .padding(start = 8.dp)
-                        )
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Categorias(
-                            categorias = listOf("Têxteis", "Cerâmica", "Entalhe"),
-                        ) { categoria ->
-                            AppButton(
-                                text = categoria,
-                                textColor = btColor,
-                                containerColor = bgColor,
-                                borderColor = btColor,
-                                shape = RoundedCornerShape(50),
-                                modifier = Modifier
-                                    .wrapContentWidth()
-                                    .height(40.dp),
-                                onClick = { println("Clicou em $categoria") }
-                            )
-                        }
-                    }
+                    Text(
+                        "Nossos produtos",
+                        fontSize = 20.sp,
+                    )
                 }
+                ImageCarousel()
             }
+
         }
     }
 }
