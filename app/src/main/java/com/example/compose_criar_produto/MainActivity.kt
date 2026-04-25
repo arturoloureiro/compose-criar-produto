@@ -99,47 +99,67 @@ fun Tela() {
         Box(
             modifier = Modifier
                 .fillMaxHeight()
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(20))
-                .padding(top = 20.dp)
-                .background(bgColor)
-                .padding(top = 20.dp),
-            contentAlignment = Alignment.Center
-        ){
+                .fillMaxWidth(),
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.banner),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .height(screenWidth * 0.55f)
+                    .fillMaxWidth()
+            )
 
-        Box(
-            modifier = Modifier
-                .height(screenWidth * 0.4f)
-                .width(screenWidth * 0.4f)
-                .clip(RoundedCornerShape(50)) // tem que vir antes do background
-                .background(btColor),
-        )
-            Spacer(modifier = Modifier.height(screenWidth * 0.35f))
+            Column(
+            ) {
 
-                Row(
-                    modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(top = 20.dp),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+                Spacer(modifier = Modifier.height(screenWidth * 0.35f))
+
+                Column(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(15, 15, 0, 0))
+                        .background(bgColor)
+                        .padding(top = 40.dp) // claaramente vai dar errado dependendo da width; deveria ser tudo devicewidth
                 ) {
-                    Text(
-                        "Paneleiras Capixabas",
-                        fontSize = 40.sp,
-                        fontFamily = libreCaslonDisplay
-                    )
+
+
+                    Row(
+                        modifier = Modifier.wrapContentHeight().fillMaxWidth().padding(top = 20.dp),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            "Paneleiras Capixabas",
+                            fontSize = 40.sp,
+                            fontFamily = libreCaslonDisplay
+                        )
+                    }
+                    Row(
+                        modifier = Modifier.wrapContentHeight().fillMaxWidth()
+                            .padding(top = 10.dp, start = 8.dp, bottom = 10.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            "Nossos produtos",
+                            fontSize = 20.sp,
+                        )
+                    }
+                    ImageCarousel()
                 }
-                Row(
-                    modifier = Modifier.wrapContentHeight().fillMaxWidth()
-                        .padding(top = 10.dp, start = 8.dp, bottom = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        "Nossos produtos",
-                        fontSize = 20.sp,
-                    )
-                }
-                ImageCarousel()
             }
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp),
+                horizontalArrangement = Arrangement.Center) {
+                    Box(
+                        modifier = Modifier
+                            .height(screenWidth * 0.4f)
+                            .width(screenWidth * 0.4f)
+                            .clip(RoundedCornerShape(50)) // tem que vir antes do background
+                            .background(btColor),
+                    )
 
+            }
+        }
         }
     }
-}
